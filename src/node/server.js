@@ -3,7 +3,7 @@ const cluster = require('cluster');
 const os = require('os');
 
 const PORT = process.env.PORT || 3000;
-const THREAD_COUNT = process.env.THREAD_COUNT || 1;
+const THREAD_COUNT = parseInt(process.env.THREAD_COUNT) || 1;
 
 if (cluster.isMaster) {
   console.log(`Master process ${process.pid} is running`);

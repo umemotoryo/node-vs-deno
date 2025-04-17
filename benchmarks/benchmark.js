@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const CONCURRENT_REQUESTS = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+const CONCURRENT_REQUESTS = [50, 100, 300];
 const TIMEOUT = 3000; // 3秒
 const ITERATIONS = 5; // 各設定で5回実行
 

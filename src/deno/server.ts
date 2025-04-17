@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.220.1/http/server.ts";
 
-const PORT = parseInt(.env.get("PORT") || "3000");
+const PORT = parseInt(Deno.env.get("PORT") || "3000");
 const THREAD_COUNT = parseInt(Deno.env.get("THREAD_COUNT") || "1");
 
 async function handler(req: Request): Promise<Response> {

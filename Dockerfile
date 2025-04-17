@@ -22,13 +22,9 @@ EXPOSE 3000 3001
 COPY <<EOF /app/start.sh
 #!/bin/bash
 if [ "\$SERVER_TYPE" = "node" ]; then
-  if [ "\$THREAD_COUNT" = "1" ]; then
-    node src/node/server.js
-  else
-    THREAD_COUNT=\$THREAD_COUNT node src/node/server.js
-  fi
+  THREAD_COUNT=\$THREAD_COUNT node src/node/server.js
 else
-  deno run --allow-net --allow-env src/deno/server.ts
+  THREAD_COUNT=\$THREAD_COUNT deno run --allow-net --allow-env src/deno/server.ts
 fi
 EOF
 

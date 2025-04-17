@@ -37,6 +37,28 @@ npm install
 
 ## 検証方法
 
+### シェルスクリプトを使用した検証（推奨）
+
+最も簡単な方法は、提供されているシェルスクリプトを使用することです：
+
+```bash
+# スクリプトに実行権限を付与
+chmod +x run_benchmark.sh
+
+# デフォルト設定（1スレッド）で実行
+./run_benchmark.sh
+
+# スレッド数を指定して実行（例：2スレッド）
+./run_benchmark.sh 2
+```
+
+このスクリプトは以下の処理を自動的に行います：
+1. 既存のコンテナの停止と削除
+2. Dockerイメージのビルド
+3. Node.jsとDenoサーバーの起動
+4. ベンチマークの実行
+5. コンテナの停止
+
 ### Dockerを使用した検証
 
 1. Dockerイメージのビルド
@@ -47,16 +69,16 @@ docker build -t node-deno-benchmark .
 2. サーバーの起動
 ```bash
 # Node.jsサーバー（シングルスレッド）とDenoサーバーを起動
-docker run -d -p 3000:3000 -e SERVER_TYPE=node -e THREAD_COUNT=1 node-deno-benchmark
-docker run -d -p 3001:3000 -e SERVER_TYPE=deno -e THREAD_COUNT=1 node-deno-benchmark
+docker run -d --rm -p 3000:3000 --cpus=1 -e SERVER_TYPE=node -e THREAD_COUNT=1 node-deno-benchmark
+docker run -d --rm -p 3001:3000 --cpus=1 -e SERVER_TYPE=deno -e THREAD_COUNT=1 node-deno-benchmark
 
 # または、Node.jsサーバーをマルチスレッドで起動
-docker run -d -p 3000:3000 -e SERVER_TYPE=node -e THREAD_COUNT=2 node-deno-benchmark
-docker run -d -p 3001:3000 -e SERVER_TYPE=deno -e THREAD_COUNT=2 node-deno-benchmark
+docker run -d --rm -p 3000:3000 --cpus=2 -e SERVER_TYPE=node -e THREAD_COUNT=2 node-deno-benchmark
+docker run -d --rm -p 3001:3000 --cpus=2 -e SERVER_TYPE=deno -e THREAD_COUNT=2 node-deno-benchmark
 
 # 3スレッドで起動する場合
-docker run -d -p 3000:3000 -e SERVER_TYPE=node -e THREAD_COUNT=3 node-deno-benchmark
-docker run -d -p 3001:3000 -e SERVER_TYPE=deno -e THREAD_COUNT=3 node-deno-benchmark
+docker run -d --rm -p 3000:3000 --cpus=3 -e SERVER_TYPE=node -e THREAD_COUNT=3 node-deno-benchmark
+docker run -d --rm -p 3001:3000 --cpus=3 -e SERVER_TYPE=deno -e THREAD_COUNT=3 node-deno-benchmark
 ```
 
 3. ベンチマークの実行
